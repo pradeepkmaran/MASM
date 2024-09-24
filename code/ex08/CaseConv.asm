@@ -20,7 +20,6 @@ L1:
     CMP AL, 'z'       ; Compare with 'z' (ASCII 122)
     JG NOT_LOWERCASE  ; If greater than 'z', jump
 
-    ; Convert lowercase to uppercase
     SUB AL, 20h       ; Convert to uppercase (subtract 32)
 
 NOT_LOWERCASE:
@@ -36,7 +35,7 @@ SKIP:
     MOV AH, 02h       ; DOS function to display a character
     MOV DL, AL        ; Move the character to DL
     INT 21h           ; Display the character
-
+    
     LOOP L1           ; Repeat loop until CX reaches 0
 
     MOV AH, 4Ch       ; DOS function to terminate the program

@@ -12,3 +12,10 @@ $debug file.exe             ; to execute the exe
 -g                          ; to run
 -q                          ; to quit
 
+***********************************************************************
+
+MOV AH, 01H         ; READ INPUT CHARACTER
+INT 21H             ; AL = INPUT
+
+MOV AH, 02H         ; DISPLAY OUTPUT CHARACTER
+INT 21H             ; OUTPUT = DL

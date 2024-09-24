@@ -1,27 +1,27 @@
-data segment
-   n1 db 31h
-   n2 db 16h
-data ends
+DATA SEGMENT
+      N1 DB 31H
+      N2 DB 16H
+DATA ENDS
 
-code segment
- assume cs:code, ds:data
-  start:
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA
+START:
 
-   mov ax,data
-   mov ds,ax
+      MOV AX, DATA
+      MOV DS, AX
 
-   mov al,n1
-   mov bl,n2
-   add al,bl
+      MOV AL, N1
+      MOV BL, N2
+      ADD AL, BL
 
-   add al,30h
-   mov dl,al
+      ADD AL, 30H         ; Convert to ASCII
+      MOV DL, AL
 
-   mov ah,02h
-   int 21h
+      MOV AH, 02H        ; Function to display character
+      INT 21H
 
-   mov ah,4ch
-   int 21h
+      MOV AH, 4CH        ; Terminate program
+      INT 21H
 
-code ends
-end start
+CODE ENDS
+END START

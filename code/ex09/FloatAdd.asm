@@ -1,36 +1,33 @@
-; Floating Point Addition in MASM
-.model small
-.stack 100h
+ASSUME CS:CODE, DS:data
 
-.data
+data SEGMENT
     num1    real4  5.5         ; First floating point number
     num2    real4  3.2         ; Second floating point number
     result  real4  ?            ; To store the result
+    msg     db 'The result is: $'
+data ENDS 
 
-.code
-main proc
-    ; Initialize the data segment
-    mov ax, @data
-    mov ds, ax
+CODE SEGMENT
+START: 
+    MOV AX, data      ; Load the data segment address into AX
+    MOV DS, AX        ; Initialize the data segment register
 
-    ; Load the first number onto the FPU stack
-    fld num1
+    ; Perform floating-point addition
+    FLD num1          ; Load first number onto FPU stack
+    FLD num2          ; Load second number onto FPU stack
+    FADD              ; Add the two numbers
+    FSTP result       ; Store the result
 
-    ; Load the second number onto the FPU stack
-    fld num2
+    ; Display the result message
+    LEA DX, msg
+    MOV AH, 09h       ; DOS function to display a string
+    INT 21h
 
-    ; Add the two numbers
-    fadd st(0), st(1)  ; st(0) = st(0) + st(1)
+    ; Convert and display the result (conversion logic needed)
+    ; You will need to implement a routine here to convert 'result' to a string
 
-    ; Store the result from the FPU stack to the result variable
-    fstp result        ; Store and pop the top of the stack
+    MOV AH, 4Ch       ; DOS function to terminate the program
+    INT 21h           ; Exit program
 
-    ; Print the result (using DOS interrupt)
-    ; Convert the result to string (simple approach)
-    ; Note: You'll need to implement your own conversion routine here or use a library
-
-    ; Exit program
-    mov ax, 4C00h
-    int 21h
-main endp
-end main
+CODE ENDS
+END START
